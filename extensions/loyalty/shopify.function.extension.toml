@@ -1,0 +1,11 @@
+name = "Loyalty"
+type = "product_discounts"
+api_version = "2022-07"
+
+[build]
+command = "/usr/local/wasi-sdk-15.0/bin/clang++ -Oz -fno-exceptions -std=c++17 src/main.cpp -o build/main.wasm"
+path = 'build/main.wasm'
+
+[ui.paths]
+create = "/loyalty/new"
+details = "/loyalty/:id" # Note that this isn't implemented in this tutorial

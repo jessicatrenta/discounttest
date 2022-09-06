@@ -1,0 +1,56 @@
+type = "checkout_ui"
+name = "jes-extension"
+
+# The dev command uses the first extension point defined in the shopify.ui.extension.toml.
+# To test how your extension will look in different areas of checkout,
+# you'll need to re-order the extension points in your shopify.ui.extension.toml file.
+
+extension_points = [
+  'Checkout::Dynamic::Render',
+  'Checkout::DeliveryAddress::RenderBefore'
+]
+
+[capabilities]
+network_access = true
+# block_progress = true
+
+[settings]
+  [[settings.fields]]
+  key = "title"
+  type = "single_line_text_field"
+  name = "Banner title"
+  description = "Enter a title for the banner."
+
+  [[settings.fields]]
+  key = "description"
+  type = "single_line_text_field"
+  name = "Banner description"
+  description = "Enter a description for the banner."
+
+  [[settings.fields]]
+  key = "status"
+  type = "single_line_text_field"
+  name = "Banner status"
+    [[settings.fields.validations]]
+    name = "choices"
+    value = "[\"info\", \"success\", \"warning\", \"critical\"]"
+
+  [[settings.fields]]
+  key = "collapsible"
+  type = "boolean"
+  name = "Show collapsible description."
+  description = "Display controls to expand or collapse the banner description."
+
+# [[metafields]]
+# namespace = "my-namespace"
+# key = "my-key"
+
+# [[metafields]]
+# namespace = "my-namespace"
+# key = "my-key-2"
+
+# Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
+# [[settings.fields]]
+# key = "heading"
+# name = "Heading"
+# type = "single_line_text_field"

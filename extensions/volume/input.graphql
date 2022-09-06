@@ -1,0 +1,21 @@
+query Input {
+  cart {
+    attribute {
+      key
+      value
+    }
+    lines {
+      quantity
+      merchandise {
+        ...on ProductVariant {
+          id
+        }
+      }
+    }
+  }
+  discountNode {
+    metafield(namespace: "discounttest", key: "volume-config") {
+      value
+    }
+  }
+}
