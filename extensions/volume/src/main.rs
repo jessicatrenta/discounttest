@@ -16,8 +16,6 @@ fn function(input: input::Input) -> Result<FunctionResult, Box<dyn std::error::E
     let cart_lines = input.cart.lines;
     let cart_attribute = input.cart.attribute;
 
-    let code: &'static str = "volume_code";
-
     if cart_attribute.is_some() {
         config.percentage = 90.0;
 

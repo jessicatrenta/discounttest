@@ -16763,7 +16763,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   ];
   render2("Checkout::Dynamic::Render", () => /* @__PURE__ */ import_react18.default.createElement(App, null));
-  render2("Checkout::DeliveryAddress::RenderBefore", () => /* @__PURE__ */ import_react18.default.createElement(App, null));
   function App() {
     const applyAttributeChange = useApplyAttributeChange();
     const { i18n } = useExtensionApi();
@@ -16821,9 +16820,29 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         console.error(result.message);
       }
     });
-    const testCartUpdate = () => {
+    const testCartUpdate = () => __async(this, null, function* () {
       console.log("testCartUpdate");
-    };
+      try {
+        applyAttributeChange({
+          key: "volume_code",
+          type: "updateAttribute",
+          value: "50"
+        }).then((data) => {
+          console.log("ATTRIBUTES", data);
+        }).then((attributes) => __async(this, null, function* () {
+          const atttt = getAttributes;
+          console.log("GET ATTRIBUTES", atttt);
+          console.log("APPLY PROD TO CARD ", id);
+          yield applyCartLinesChange({
+            type: "addCartLine",
+            merchandiseId: id,
+            quantity: 0
+          }).then((data) => console.log("DATA", data)).catch((error) => console.error("ERROR", error));
+        }));
+      } catch (e) {
+        console.log("ERROR IN useApplyAttributeChange", e);
+      }
+    });
     (0, import_react18.useEffect)(() => {
       setLoading(true);
       new Promise((resolve) => {

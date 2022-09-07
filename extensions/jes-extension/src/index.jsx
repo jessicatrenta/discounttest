@@ -27,24 +27,22 @@ const PRODUCT_VARIANTS_DATA = [
     img: "https://via.placeholder.com/100/F1F1F1?text=P1",
     title: "Product 1 Title",
     price: 10.0,
-  }
+  },
 ];
-
 
 // Set the entry points for the extension
 render("Checkout::Dynamic::Render", () => <App />);
-render("Checkout::DeliveryAddress::RenderBefore", () => <App />);
+// render("Checkout::DeliveryAddress::RenderBefore", () => <App />);
 
 function App() {
-
   const applyAttributeChange = useApplyAttributeChange();
 
   const { i18n } = useExtensionApi();
   const applyCartLinesChange = useApplyCartLinesChange();
   const getAttributes = useAttributes();
 
-  const myattr = getAttributes
-  console.log('GET ATTRIBUTES myattr', myattr)
+  const myattr = getAttributes;
+  console.log("GET ATTRIBUTES myattr", myattr);
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -52,47 +50,47 @@ function App() {
   const [showError, setShowError] = useState(false);
   const [apiResponse, setApiResponse] = useState();
 
-  const callFunction  = async () => {
+  const callFunction = async () => {
     // setLoading(true);
-    console.log('callFunction')
+    console.log("callFunction");
     try {
-      const response = await fetch('https://httpbin.org/ip', {
-        mode: 'cors',
+      const response = await fetch("https://httpbin.org/ip", {
+        mode: "cors",
         credentials: "same-origin",
         headers: {
-          'Access-Control-Allow-Origin':'*',
-          'Bypass-Tunnel-Reminder': 'true'
-        }
+          "Access-Control-Allow-Origin": "*",
+          "Bypass-Tunnel-Reminder": "true",
+        },
       })
-        .then(response => response.json())
-        .then( data => {
-          console.log('RESPONSE IS ', data)
-          try{
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("RESPONSE IS ", data);
+          try {
             applyAttributeChange({
-              key: 'volume_code',
-              type: 'updateAttribute',
-              value: "50"
-            }).then((data) => {
-              console.log('ATTRIBUTES', data)
-            }).then((attributes) => {
-              const atttt = getAttributes
-              console.log('GET ATTRIBUTES', atttt)
-              console.log('APPLY PROD TO CARD ', id)
-              addProduct()
+              key: "volume_code",
+              type: "updateAttribute",
+              value: "50",
             })
-
-          } catch(e){
-            console.log('ERROR IN useApplyAttributeChange', e)
+              .then((data) => {
+                console.log("ATTRIBUTES", data);
+              })
+              .then((attributes) => {
+                const atttt = getAttributes;
+                console.log("GET ATTRIBUTES", atttt);
+                console.log("APPLY PROD TO CARD ", id);
+                addProduct();
+              });
+          } catch (e) {
+            console.log("ERROR IN useApplyAttributeChange", e);
           }
-        })
-    }
-    catch (error) {
+        });
+    } catch (error) {
       // setIp('NADA')
-      console.log('ERROR', error)
+      console.log("ERROR", error);
     }
-  }
+  };
 
-  const addProduct = async() => {
+  const addProduct = async () => {
     const result = await applyCartLinesChange({
       type: "addCartLine",
       merchandiseId: id,
@@ -106,17 +104,35 @@ function App() {
       setShowError(true);
       console.error(result.message);
     }
-  }
+  };
 
-  const testCartUpdate = () => {
+  const testCartUpdate = async () => {
     console.log('testCartUpdate')
-    // applyCartLinesChange({
-    //   type: "addCartLine",
-    //   merchandiseId: id,
-    //   quantity: 1,
-    // });
-  } 
-
+    try {
+      applyAttributeChange({
+        key: "volume_code",
+        type: "updateAttribute",
+        value: "50",
+      })
+        .then((data) => {
+          console.log("ATTRIBUTES", data);
+        })
+        .then( async (attributes) => {
+          const atttt = getAttributes;
+          console.log("GET ATTRIBUTES", atttt);
+          console.log("APPLY PROD TO CARD ", id);
+          await applyCartLinesChange({
+            type: "addCartLine",
+            merchandiseId: id,
+            quantity: 0,
+          }).then((data) => console.log("DATA", data))
+          .catch((error) => console.error("ERROR", error));
+        });
+    } catch (e) {
+      console.log("ERROR IN useApplyAttributeChange", e);
+    }
+    
+  };
 
   useEffect(() => {
     // Set the loading state to show some UI if you're waiting
@@ -144,10 +160,9 @@ function App() {
     }
   }, [showError]);
 
-
   // Access the current cart lines and subscribe to changes
   const lines = useCartLines();
-  console.log('LINES', lines)
+  console.log("LINES", lines);
 
   // Show a loading UI if you're waiting for product variant data
   // Use Skeleton components to keep placement from shifting when content loads
@@ -192,75 +207,69 @@ function App() {
   // Set a default status for the banner if a merchant didn't configure the banner in the checkout editor
   // const {getSessionToken} = useSessionToken();
 
-
   // Render the banner
   return (
     <>
-      <Banner title={"BANNER TITLE"} >
+      <Banner title={"BANNER TITLE"}>
         RESPONSE FROM API CALL:: {apiResponse}
       </Banner>
       <BlockStack spacing="loose">
-      <Divider />
-      <Heading level={2}>You might also like</Heading>
-      <BlockStack spacing="loose">
-        <InlineLayout
-          spacing="base"
-          // Use the `columns` property to set the width of the columns
-          // Image: column should be 64px wide
-          // BlockStack: column, which contains the title and price, should "fill" all available space
-          // Button: column should "auto" size based on the intrinsic width of the elements
-          columns={[64, "fill", "auto"]}
-          blockAlignment="center"
-        >
-          <Image
-            border="base"
-            borderWidth="base"
-            borderRadius="loose"
-            source={img}
-            description={title}
-            aspectRatio={1}
-          />
-          <BlockStack spacing="none">
-            <Text size="medium" emphasis="strong">
-              {title}
-            </Text>
-            <Text appearance="subdued">{renderPrice}</Text>
-          </BlockStack>
-          <Button
-            kind="secondary"
-            loading={adding}
-            accessibilityLabel={`Add ${title} to cart`}
-            onPress={async () => {
-              
-              callFunction()
-              // setAdding(true);
-              // Apply the cart lines change
-              
-            }}
+        <Divider />
+        <Heading level={2}>You might also like</Heading>
+        <BlockStack spacing="loose">
+          <InlineLayout
+            spacing="base"
+            // Use the `columns` property to set the width of the columns
+            // Image: column should be 64px wide
+            // BlockStack: column, which contains the title and price, should "fill" all available space
+            // Button: column should "auto" size based on the intrinsic width of the elements
+            columns={[64, "fill", "auto"]}
+            blockAlignment="center"
           >
-          Add
-        </Button>
-          <Button
-            kind="primary"
-            loading={adding}
-            accessibilityLabel={`testCartUpdate`}
-            onPress={() => {
-              testCartUpdate()
-              
-            }}
-          >
-            testCartUpdate
-          </Button>
-        </InlineLayout>
+            <Image
+              border="base"
+              borderWidth="base"
+              borderRadius="loose"
+              source={img}
+              description={title}
+              aspectRatio={1}
+            />
+            <BlockStack spacing="none">
+              <Text size="medium" emphasis="strong">
+                {title}
+              </Text>
+              <Text appearance="subdued">{renderPrice}</Text>
+            </BlockStack>
+            <Button
+              kind="secondary"
+              loading={adding}
+              accessibilityLabel={`Add ${title} to cart`}
+              onPress={async () => {
+                callFunction();
+                // setAdding(true);
+                // Apply the cart lines change
+              }}
+            >
+              Add
+            </Button>
+            <Button
+              kind="primary"
+              loading={adding}
+              accessibilityLabel={`testCartUpdate`}
+              onPress={() => {
+                testCartUpdate();
+              }}
+            >
+              testCartUpdate
+            </Button>
+          </InlineLayout>
+        </BlockStack>
+        {showError && (
+          <Banner status="critical">
+            There was an issue adding this product. Please try again.
+          </Banner>
+        )}
       </BlockStack>
-      {showError && (
-        <Banner status="critical">
-          There was an issue adding this product. Please try again.
-        </Banner>
-      )}
-    </BlockStack>
     </>
   );
-
-  
 }
