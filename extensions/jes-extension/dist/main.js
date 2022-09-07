@@ -16170,7 +16170,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   });
 
   // src/index.jsx
-  var import_react18 = __toModule(require_react());
+  var import_react9 = __toModule(require_react());
 
   // ../../node_modules/@remote-ui/core/build/esm/component.mjs
   function createRemoteComponent(componentType) {
@@ -16187,33 +16187,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/Banner/Banner.mjs
   var Banner = createRemoteComponent("Banner");
-
-  // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/BlockStack/BlockStack.mjs
-  var BlockStack = createRemoteComponent("BlockStack");
-
-  // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/Button/Button.mjs
-  var Button = createRemoteComponent("Button");
-
-  // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/Divider/Divider.mjs
-  var Divider = createRemoteComponent("Divider");
-
-  // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/Heading/Heading.mjs
-  var Heading = createRemoteComponent("Heading");
-
-  // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/Image/Image.mjs
-  var Image = createRemoteComponent("Image");
-
-  // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/InlineLayout/InlineLayout.mjs
-  var InlineLayout = createRemoteComponent("InlineLayout");
-
-  // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/SkeletonImage/SkeletonImage.mjs
-  var SkeletonImage = createRemoteComponent("SkeletonImage");
-
-  // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/SkeletonText/SkeletonText.mjs
-  var SkeletonText = createRemoteComponent("SkeletonText");
-
-  // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/components/Text/Text.mjs
-  var Text = createRemoteComponent("Text");
 
   // ../../node_modules/@shopify/checkout-ui-extensions/build/esm/extend.mjs
   var extend = function extend2() {
@@ -16449,35 +16422,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/Banner/Banner.mjs
   var Banner2 = createRemoteReactComponent(Banner);
 
-  // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/BlockStack/BlockStack.mjs
-  var BlockStack2 = createRemoteReactComponent(BlockStack);
-
-  // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/Button/Button.mjs
-  var Button2 = createRemoteReactComponent(Button);
-
-  // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/Divider/Divider.mjs
-  var Divider2 = createRemoteReactComponent(Divider);
-
-  // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/Heading/Heading.mjs
-  var Heading2 = createRemoteReactComponent(Heading);
-
-  // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/Image/Image.mjs
-  var Image2 = createRemoteReactComponent(Image);
-
-  // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/InlineLayout/InlineLayout.mjs
-  var InlineLayout2 = createRemoteReactComponent(InlineLayout);
-
-  // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/SkeletonImage/SkeletonImage.mjs
-  var SkeletonImage2 = createRemoteReactComponent(SkeletonImage);
-
-  // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/SkeletonText/SkeletonText.mjs
-  var SkeletonText2 = createRemoteReactComponent(SkeletonText);
-
-  // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/components/Text/Text.mjs
-  var Text2 = createRemoteReactComponent(Text);
-
   // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/hooks/api.mjs
-  var import_react15 = __toModule(require_react());
+  var import_react6 = __toModule(require_react());
 
   // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/errors.mjs
   function _typeof(obj) {
@@ -16624,12 +16570,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }(/* @__PURE__ */ _wrapNativeSuper(Error));
 
   // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/context.mjs
-  var import_react14 = __toModule(require_react());
-  var ExtensionApiContext = /* @__PURE__ */ (0, import_react14.createContext)(null);
+  var import_react5 = __toModule(require_react());
+  var ExtensionApiContext = /* @__PURE__ */ (0, import_react5.createContext)(null);
 
   // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/hooks/api.mjs
   function useExtensionApi() {
-    var api = (0, import_react15.useContext)(ExtensionApiContext);
+    var api = (0, import_react6.useContext)(ExtensionApiContext);
     if (api == null) {
       throw new CheckoutUIExtensionError("You can only call this hook when running as a UI extension.");
     }
@@ -16637,7 +16583,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/hooks/subscription.mjs
-  var import_react16 = __toModule(require_react());
+  var import_react7 = __toModule(require_react());
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
@@ -16697,8 +16643,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return arr;
   }
   function useSubscription(subscription) {
-    var _useState = (0, import_react16.useState)(subscription.current), _useState2 = _slicedToArray(_useState, 2), setValue = _useState2[1];
-    (0, import_react16.useEffect)(function() {
+    var _useState = (0, import_react7.useState)(subscription.current), _useState2 = _slicedToArray(_useState, 2), setValue = _useState2[1];
+    (0, import_react7.useEffect)(function() {
       var didUnsubscribe = false;
       var checkForUpdates = function checkForUpdates2(newValue) {
         if (didUnsubscribe) {
@@ -16754,74 +16700,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // src/index.jsx
-  var PRODUCT_VARIANTS_DATA = [
-    {
-      id: "gid://shopify/ProductVariant/43575520952562",
-      img: "https://via.placeholder.com/100/F1F1F1?text=P1",
-      title: "Product 1 Title",
-      price: 10
-    }
-  ];
-  render2("Checkout::Dynamic::Render", () => /* @__PURE__ */ import_react18.default.createElement(App, null));
-  render2("Checkout::DeliveryAddress::RenderBefore", () => /* @__PURE__ */ import_react18.default.createElement(App, null));
+  render2("Checkout::Dynamic::Render", () => /* @__PURE__ */ import_react9.default.createElement(App, null));
   function App() {
     const applyAttributeChange = useApplyAttributeChange();
-    const { i18n } = useExtensionApi();
     const applyCartLinesChange = useApplyCartLinesChange();
+    const cartLines = useCartLines();
     const getAttributes = useAttributes();
-    const myId = "gid://shopify/ProductVariant/43575520952562";
-    const [products, setProducts] = (0, import_react18.useState)([]);
-    const [loading, setLoading] = (0, import_react18.useState)(false);
-    const [adding, setAdding] = (0, import_react18.useState)(false);
-    const [showError, setShowError] = (0, import_react18.useState)(false);
-    const [apiResponse, setApiResponse] = (0, import_react18.useState)();
-    const callFunction = () => __async(this, null, function* () {
-      console.log("callFunction");
-      try {
-        const response = yield fetch("https://httpbin.org/ip", {
-          mode: "cors",
-          credentials: "same-origin",
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Bypass-Tunnel-Reminder": "true"
-          }
-        }).then((response2) => response2.json()).then((data) => {
-          console.log("RESPONSE IS ", data);
-          try {
-            applyAttributeChange({
-              key: "volume_code",
-              type: "updateAttribute",
-              value: "50"
-            }).then((data2) => {
-              console.log("ATTRIBUTES", data2);
-            }).then((attributes) => {
-              const atttt = getAttributes;
-              console.log("GET ATTRIBUTES", atttt);
-              console.log("APPLY PROD TO CARD ", id);
-              addProduct();
-            });
-          } catch (e) {
-            console.log("ERROR IN useApplyAttributeChange", e);
-          }
-        });
-      } catch (error) {
-        console.log("ERROR", error);
-      }
-    });
-    const addProduct = () => __async(this, null, function* () {
-      const result = yield applyCartLinesChange({
-        type: "addCartLine",
-        merchandiseId: id,
-        quantity: 1
-      });
-      setAdding(false);
-      if (result.type === "error") {
-        setShowError(true);
-        console.error(result.message);
-      }
-    });
+    const [apiResponse, setApiResponse] = (0, import_react9.useState)();
     const testApplyLavaDiscount = () => __async(this, null, function* () {
+      var _a;
       console.log("testApplyLavaDiscount");
+      const productId = (_a = cartLines[0].merchandise) == null ? void 0 : _a.id;
       try {
         yield fetch("https://httpbin.org/ip", {
           mode: "cors",
@@ -16832,6 +16721,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
         }).then((response) => response.json()).then((data) => {
           data = data;
+          setApiResponse(data == null ? void 0 : data.origin);
           console.log(" LAVA RESPONSE IS ", data);
           try {
             applyAttributeChange({
@@ -16843,109 +16733,25 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               console.log("GET NEW ATTRIBUTES", newAttribute);
               yield applyCartLinesChange({
                 type: "addCartLine",
-                merchandiseId: myId,
+                merchandiseId: productId,
                 quantity: 0
               }).then((applyCartLinesChangeResponse) => console.log("applyCartLinesChangeResponse", applyCartLinesChangeResponse)).catch((applyCartLinesChangeError) => console.error("applyCartLinesChangeError", applyCartLinesChangeError));
             }));
           } catch (e) {
-            console.log("ERROR IN applyAttributeChange", e);
+            console.log("ERROR in applyAttributeChange", e);
           }
         });
       } catch (error) {
         console.log("API CALL ERROR", error);
       }
     });
-    (0, import_react18.useEffect)(() => {
-      setLoading(true);
-      testApplyLavaDiscount();
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(PRODUCT_VARIANTS_DATA);
-        }, 800);
-      }).then((result) => {
-        setProducts(result);
-      }).catch((error) => console.error(error)).finally(() => setLoading(false));
-    }, []);
-    (0, import_react18.useEffect)(() => {
-      if (showError) {
-        const timer = setTimeout(() => setShowError(false), 3e3);
-        return () => clearTimeout(timer);
-      }
-    }, [showError]);
-    const lines = useCartLines();
-    console.log("LINES", lines);
-    if (loading) {
-      return /* @__PURE__ */ import_react18.default.createElement(BlockStack2, {
-        spacing: "loose"
-      }, /* @__PURE__ */ import_react18.default.createElement(Divider2, null), /* @__PURE__ */ import_react18.default.createElement(Heading2, {
-        level: 2
-      }, "You might also like"), /* @__PURE__ */ import_react18.default.createElement(BlockStack2, {
-        spacing: "loose"
-      }, /* @__PURE__ */ import_react18.default.createElement(InlineLayout2, {
-        spacing: "base",
-        columns: [64, "fill", "auto"],
-        blockAlignment: "center"
-      }, /* @__PURE__ */ import_react18.default.createElement(SkeletonImage2, {
-        aspectRatio: 1
-      }), /* @__PURE__ */ import_react18.default.createElement(BlockStack2, {
-        spacing: "none"
-      }, /* @__PURE__ */ import_react18.default.createElement(SkeletonText2, {
-        inlineSize: "large"
-      }), /* @__PURE__ */ import_react18.default.createElement(SkeletonText2, {
-        inlineSize: "small"
-      })), /* @__PURE__ */ import_react18.default.createElement(Button2, {
-        kind: "secondary",
-        disabled: true
-      }, "Add"))));
-    }
-    if (!loading && products.length === 0) {
-      return null;
-    }
-    const productsOnOffer = products.filter((product) => !lines.map((item) => item.merchandise.id).includes(product.id));
-    const { id, img, title, price } = productsOnOffer[0] || products[0];
-    const renderPrice = i18n.formatCurrency(price);
-    return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement(Banner2, {
-      title: "BANNER TITLE"
-    }, "RESPONSE FROM API CALL:: ", apiResponse), /* @__PURE__ */ import_react18.default.createElement(BlockStack2, {
-      spacing: "loose"
-    }, /* @__PURE__ */ import_react18.default.createElement(Divider2, null), /* @__PURE__ */ import_react18.default.createElement(Heading2, {
-      level: 2
-    }, "You might also like"), /* @__PURE__ */ import_react18.default.createElement(BlockStack2, {
-      spacing: "loose"
-    }, /* @__PURE__ */ import_react18.default.createElement(InlineLayout2, {
-      spacing: "base",
-      columns: [64, "fill", "auto"],
-      blockAlignment: "center"
-    }, /* @__PURE__ */ import_react18.default.createElement(Image2, {
-      border: "base",
-      borderWidth: "base",
-      borderRadius: "loose",
-      source: img,
-      description: title,
-      aspectRatio: 1
-    }), /* @__PURE__ */ import_react18.default.createElement(BlockStack2, {
-      spacing: "none"
-    }, /* @__PURE__ */ import_react18.default.createElement(Text2, {
-      size: "medium",
-      emphasis: "strong"
-    }, title), /* @__PURE__ */ import_react18.default.createElement(Text2, {
-      appearance: "subdued"
-    }, renderPrice)), /* @__PURE__ */ import_react18.default.createElement(Button2, {
-      kind: "secondary",
-      loading: adding,
-      accessibilityLabel: `Add ${title} to cart`,
-      onPress: () => __async(this, null, function* () {
-        callFunction();
-      })
-    }, "Add"), /* @__PURE__ */ import_react18.default.createElement(Button2, {
-      kind: "primary",
-      loading: adding,
-      accessibilityLabel: `testApplyLavaDiscount`,
-      onPress: () => {
+    (0, import_react9.useEffect)(() => {
+      if (!apiResponse) {
         testApplyLavaDiscount();
       }
-    }, "testApplyLavaDiscount"))), showError && /* @__PURE__ */ import_react18.default.createElement(Banner2, {
-      status: "critical"
-    }, "There was an issue adding this product. Please try again.")));
+    }, []);
+    return /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Banner2, {
+      title: "MY CHECKOUT UI "
+    }, "RESPONSE FROM LAVA API CALL:: ", apiResponse));
   }
 })();
