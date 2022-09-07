@@ -14,6 +14,7 @@ import {
   useCartLines,
   useApplyAttributeChange,
   useApplyCartLinesChange,
+  useAttributes,
   useAppMetafields,
   useApplyMetafieldsChange,
   useSettings,
@@ -36,28 +37,24 @@ render("Checkout::DeliveryAddress::RenderBefore", () => <App />);
 
 function App() {
 
-
   const applyAttributeChange = useApplyAttributeChange();
 
-
-
-  // Use i18n to format currencies, numbers, and translate strings
   const { i18n } = useExtensionApi();
-  // Get a reference to the function that will apply changes to the cart lines from the imported hook
   const applyCartLinesChange = useApplyCartLinesChange();
+  const getAttributes = useAttributes();
 
+  const myattr = getAttributes
+  console.log('GET ATTRIBUTES myattr', myattr)
 
-
-  // Set up the states
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [adding, setAdding] = useState(false);
   const [showError, setShowError] = useState(false);
   const [apiResponse, setApiResponse] = useState();
 
-  useEffect( async () => {
-    setLoading(true);
-    console.log('CIAO')
+  const callFunction  = async () => {
+    // setLoading(true);
+    console.log('callFunction')
     try {
       const response = await fetch('https://httpbin.org/ip', {
         mode: 'cors',
@@ -77,9 +74,13 @@ function App() {
               value: "50"
             }).then((data) => {
               console.log('ATTRIBUTES', data)
-            }).then(() => {
-              console.log('ATT', attributes)
+            }).then((attributes) => {
+              const atttt = getAttributes
+              console.log('GET ATTRIBUTES', atttt)
+              console.log('APPLY PROD TO CARD ', id)
+              addProduct()
             })
+
           } catch(e){
             console.log('ERROR IN useApplyAttributeChange', e)
           }
@@ -89,18 +90,33 @@ function App() {
       // setIp('NADA')
       console.log('ERROR', error)
     }
-  }, []);
-
-  
-
-  const sendRequest = async () => {
-    console.log('SEND REQUEST')
-    const response = await fetch('https://httpbin.org/ip');
-    const data = await response.json();
-    console.log('data', data);
-    setApiResponse(data?.origin)
-    // aggiorno cart 
   }
+
+  const addProduct = async() => {
+    const result = await applyCartLinesChange({
+      type: "addCartLine",
+      merchandiseId: id,
+      quantity: 1,
+    });
+    setAdding(false);
+    if (result.type === "error") {
+      // An error occurred adding the cart line
+      // Verify that you're using a valid product variant ID
+      // For example, 'gid://shopify/ProductVariant/123'
+      setShowError(true);
+      console.error(result.message);
+    }
+  }
+
+  const testCartUpdate = () => {
+    console.log('testCartUpdate')
+    // applyCartLinesChange({
+    //   type: "addCartLine",
+    //   merchandiseId: id,
+    //   quantity: 1,
+    // });
+  } 
+
 
   useEffect(() => {
     // Set the loading state to show some UI if you're waiting
@@ -131,7 +147,6 @@ function App() {
 
   // Access the current cart lines and subscribe to changes
   const lines = useCartLines();
-
   console.log('LINES', lines)
 
   // Show a loading UI if you're waiting for product variant data
@@ -216,26 +231,25 @@ function App() {
             loading={adding}
             accessibilityLabel={`Add ${title} to cart`}
             onPress={async () => {
-              setAdding(true);
+              
+              callFunction()
+              // setAdding(true);
               // Apply the cart lines change
-              console.log('APPLY PROD TO CARD ', id)
-              const result1 = await applyAttributeChange()
-              const result = await applyCartLinesChange({
-                type: "addCartLine",
-                merchandiseId: id,
-                quantity: 1,
-              });
-              setAdding(false);
-              if (result.type === "error") {
-                // An error occurred adding the cart line
-                // Verify that you're using a valid product variant ID
-                // For example, 'gid://shopify/ProductVariant/123'
-                setShowError(true);
-                console.error(result.message);
-              }
+              
             }}
           >
-            Add
+          Add
+        </Button>
+          <Button
+            kind="primary"
+            loading={adding}
+            accessibilityLabel={`testCartUpdate`}
+            onPress={() => {
+              testCartUpdate()
+              
+            }}
+          >
+            testCartUpdate
           </Button>
         </InlineLayout>
       </BlockStack>

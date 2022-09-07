@@ -15,9 +15,14 @@ fn function(input: input::Input) -> Result<FunctionResult, Box<dyn std::error::E
     let mut config: input::Configuration = input.configuration();
     let cart_lines = input.cart.lines;
     let cart_attribute = input.cart.attribute;
-    if cart_attribute.key == "volume_code" {
-        config.percentage = 20.0;
-    }
+
+    let code: &'static str = "volume_code";
+
+    if cart_attribute.is_some() {
+        config.percentage = 90.0;
+
+    } 
+
 
     if cart_lines.is_empty() || config.percentage == 0.0 {
 

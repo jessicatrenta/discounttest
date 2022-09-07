@@ -16717,6 +16717,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // ../../node_modules/@shopify/checkout-ui-extensions-react/build/esm/hooks/attributes.mjs
+  function useAttributes() {
+    return useSubscription(useExtensionApi().attributes);
+  }
   function useApplyAttributeChange() {
     return useExtensionApi().applyAttributeChange;
   }
@@ -16765,14 +16768,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const applyAttributeChange = useApplyAttributeChange();
     const { i18n } = useExtensionApi();
     const applyCartLinesChange = useApplyCartLinesChange();
+    const getAttributes = useAttributes();
+    const myattr = getAttributes;
+    console.log("GET ATTRIBUTES myattr", myattr);
     const [products, setProducts] = (0, import_react18.useState)([]);
     const [loading, setLoading] = (0, import_react18.useState)(false);
     const [adding, setAdding] = (0, import_react18.useState)(false);
     const [showError, setShowError] = (0, import_react18.useState)(false);
     const [apiResponse, setApiResponse] = (0, import_react18.useState)();
-    (0, import_react18.useEffect)(() => __async(this, null, function* () {
-      setLoading(true);
-      console.log("CIAO");
+    const callFunction = () => __async(this, null, function* () {
+      console.log("callFunction");
       try {
         const response = yield fetch("https://httpbin.org/ip", {
           mode: "cors",
@@ -16790,8 +16795,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               value: "50"
             }).then((data2) => {
               console.log("ATTRIBUTES", data2);
-            }).then(() => {
-              console.log("ATT", attributes);
+            }).then((attributes) => {
+              const atttt = getAttributes;
+              console.log("GET ATTRIBUTES", atttt);
+              console.log("APPLY PROD TO CARD ", id);
+              addProduct();
             });
           } catch (e) {
             console.log("ERROR IN useApplyAttributeChange", e);
@@ -16800,14 +16808,22 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       } catch (error) {
         console.log("ERROR", error);
       }
-    }), []);
-    const sendRequest = () => __async(this, null, function* () {
-      console.log("SEND REQUEST");
-      const response = yield fetch("https://httpbin.org/ip");
-      const data = yield response.json();
-      console.log("data", data);
-      setApiResponse(data == null ? void 0 : data.origin);
     });
+    const addProduct = () => __async(this, null, function* () {
+      const result = yield applyCartLinesChange({
+        type: "addCartLine",
+        merchandiseId: id,
+        quantity: 1
+      });
+      setAdding(false);
+      if (result.type === "error") {
+        setShowError(true);
+        console.error(result.message);
+      }
+    });
+    const testCartUpdate = () => {
+      console.log("testCartUpdate");
+    };
     (0, import_react18.useEffect)(() => {
       setLoading(true);
       new Promise((resolve) => {
@@ -16887,21 +16903,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       loading: adding,
       accessibilityLabel: `Add ${title} to cart`,
       onPress: () => __async(this, null, function* () {
-        setAdding(true);
-        console.log("APPLY PROD TO CARD ", id);
-        const result1 = yield applyAttributeChange();
-        const result = yield applyCartLinesChange({
-          type: "addCartLine",
-          merchandiseId: id,
-          quantity: 1
-        });
-        setAdding(false);
-        if (result.type === "error") {
-          setShowError(true);
-          console.error(result.message);
-        }
+        callFunction();
       })
-    }, "Add"))), showError && /* @__PURE__ */ import_react18.default.createElement(Banner2, {
+    }, "Add"), /* @__PURE__ */ import_react18.default.createElement(Button2, {
+      kind: "primary",
+      loading: adding,
+      accessibilityLabel: `testCartUpdate`,
+      onPress: () => {
+        testCartUpdate();
+      }
+    }, "testCartUpdate"))), showError && /* @__PURE__ */ import_react18.default.createElement(Banner2, {
       status: "critical"
     }, "There was an issue adding this product. Please try again.")));
   }

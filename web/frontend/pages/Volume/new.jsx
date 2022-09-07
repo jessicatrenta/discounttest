@@ -30,7 +30,7 @@ import { useAuthenticatedFetch } from "../../hooks";
 const todaysDate = new Date();
 const METAFIELD_NAMESPACE = "discounttest";
 const METAFIELD_CONFIGURATION_KEY = "volume-config";
-const FUNCTION_ID = "01GC9QKTTVEW1ZMYET3V0S3PW8";
+const FUNCTION_ID = "01GC9Z7Q447YSEVS6NVYEZ39AQ";
 
 export default function VolumeNew() {
   const app = useAppBridge();
@@ -84,7 +84,7 @@ export default function VolumeNew() {
     },
     onSubmit: async (form) => {
       const discount = {
-        functionId: FUNCTION_ID,
+        functionId: "01GC9Z7Q447YSEVS6NVYEZ39AQ",
         combinesWith: form.combinesWith,
         startsAt: form.startDate,
         endsAt: form.endDate,

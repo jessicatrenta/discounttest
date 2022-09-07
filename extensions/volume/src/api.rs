@@ -66,12 +66,11 @@ pub mod input {
         pub attribute: Option<Attribute>,
     }
 
-    #[derive(Clone, Debug, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct Attribute {
         pub key: String,
         pub value: String,
     }
-
     #[derive(Clone, Debug, Deserialize)]
     pub struct CartLine {
         pub quantity: Int,
