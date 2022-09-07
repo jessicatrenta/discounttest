@@ -35,8 +35,12 @@ function App() {
         .then((response) => response.json())
         .then((data) => {
           // insert mocked data here
-          data = data; // add your object here
-          setApiResponse(data?.origin);
+          const mock = {
+            memberType: 'SILVER',
+            value: '10'
+          };
+          data = mock; // add your object here
+          setApiResponse(JSON.stringify(data));
           console.log(" LAVA RESPONSE IS ", data);
           try {
             /* applyAttributeChange sets an arbitrary attribute to the cart
@@ -45,11 +49,11 @@ function App() {
             applyAttributeChange({
               key: "volume_code",
               type: "updateAttribute",
-              value: "50",
-            }).then(async () => {
+              value: data?.value,
+            }).then(async (res) => {
               // check if the new attribute has been applied
-              const newAttribute = getAttributes;
-              console.log("GET NEW ATTRIBUTES", newAttribute);
+              console.log("applyAttributeChange res", res);
+              console.log("GET NEW ATTRIBUTES", getAttributes);
               // since the applyAttributeChange does not trigger the discount functions to be re-executed
               // we need to use applyCartLinesChange to update the cart
               // since we only have to trigger the discount function without adding any product
@@ -91,7 +95,7 @@ function App() {
   // Render checkout-ui
   return (
     <>
-      <Banner title={"MY CHECKOUT UI "}>
+      <Banner title={"MY CHECKOUT UI - test automatic discount"}>
         RESPONSE FROM LAVA API CALL:: {apiResponse}
       </Banner>
     </>

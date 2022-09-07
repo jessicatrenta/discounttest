@@ -16720,17 +16720,21 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             "Bypass-Tunnel-Reminder": "true"
           }
         }).then((response) => response.json()).then((data) => {
-          data = data;
-          setApiResponse(data == null ? void 0 : data.origin);
+          const mock = {
+            memberType: "SILVER",
+            value: "10"
+          };
+          data = mock;
+          setApiResponse(JSON.stringify(data));
           console.log(" LAVA RESPONSE IS ", data);
           try {
             applyAttributeChange({
               key: "volume_code",
               type: "updateAttribute",
-              value: "50"
-            }).then(() => __async(this, null, function* () {
-              const newAttribute = getAttributes;
-              console.log("GET NEW ATTRIBUTES", newAttribute);
+              value: data == null ? void 0 : data.value
+            }).then((res) => __async(this, null, function* () {
+              console.log("applyAttributeChange res", res);
+              console.log("GET NEW ATTRIBUTES", getAttributes);
               yield applyCartLinesChange({
                 type: "addCartLine",
                 merchandiseId: productId,
@@ -16751,7 +16755,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
     }, []);
     return /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Banner2, {
-      title: "MY CHECKOUT UI "
+      title: "MY CHECKOUT UI - test automatic discount"
     }, "RESPONSE FROM LAVA API CALL:: ", apiResponse));
   }
 })();
