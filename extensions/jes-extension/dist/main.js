@@ -16763,13 +16763,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   ];
   render2("Checkout::Dynamic::Render", () => /* @__PURE__ */ import_react18.default.createElement(App, null));
+  render2("Checkout::DeliveryAddress::RenderBefore", () => /* @__PURE__ */ import_react18.default.createElement(App, null));
   function App() {
     const applyAttributeChange = useApplyAttributeChange();
     const { i18n } = useExtensionApi();
     const applyCartLinesChange = useApplyCartLinesChange();
     const getAttributes = useAttributes();
-    const myattr = getAttributes;
-    console.log("GET ATTRIBUTES myattr", myattr);
+    const myId = "gid://shopify/ProductVariant/43575520952562";
     const [products, setProducts] = (0, import_react18.useState)([]);
     const [loading, setLoading] = (0, import_react18.useState)(false);
     const [adding, setAdding] = (0, import_react18.useState)(false);
@@ -16820,31 +16820,44 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         console.error(result.message);
       }
     });
-    const testCartUpdate = () => __async(this, null, function* () {
-      console.log("testCartUpdate");
+    const testApplyLavaDiscount = () => __async(this, null, function* () {
+      console.log("testApplyLavaDiscount");
       try {
-        applyAttributeChange({
-          key: "volume_code",
-          type: "updateAttribute",
-          value: "50"
-        }).then((data) => {
-          console.log("ATTRIBUTES", data);
-        }).then((attributes) => __async(this, null, function* () {
-          const atttt = getAttributes;
-          console.log("GET ATTRIBUTES", atttt);
-          console.log("APPLY PROD TO CARD ", id);
-          yield applyCartLinesChange({
-            type: "addCartLine",
-            merchandiseId: id,
-            quantity: 0
-          }).then((data) => console.log("DATA", data)).catch((error) => console.error("ERROR", error));
-        }));
-      } catch (e) {
-        console.log("ERROR IN useApplyAttributeChange", e);
+        yield fetch("https://httpbin.org/ip", {
+          mode: "cors",
+          credentials: "same-origin",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Bypass-Tunnel-Reminder": "true"
+          }
+        }).then((response) => response.json()).then((data) => {
+          data = data;
+          console.log(" LAVA RESPONSE IS ", data);
+          try {
+            applyAttributeChange({
+              key: "volume_code",
+              type: "updateAttribute",
+              value: "50"
+            }).then(() => __async(this, null, function* () {
+              const newAttribute = getAttributes;
+              console.log("GET NEW ATTRIBUTES", newAttribute);
+              yield applyCartLinesChange({
+                type: "addCartLine",
+                merchandiseId: myId,
+                quantity: 0
+              }).then((applyCartLinesChangeResponse) => console.log("applyCartLinesChangeResponse", applyCartLinesChangeResponse)).catch((applyCartLinesChangeError) => console.error("applyCartLinesChangeError", applyCartLinesChangeError));
+            }));
+          } catch (e) {
+            console.log("ERROR IN applyAttributeChange", e);
+          }
+        });
+      } catch (error) {
+        console.log("API CALL ERROR", error);
       }
     });
     (0, import_react18.useEffect)(() => {
       setLoading(true);
+      testApplyLavaDiscount();
       new Promise((resolve) => {
         setTimeout(() => {
           resolve(PRODUCT_VARIANTS_DATA);
@@ -16927,11 +16940,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }, "Add"), /* @__PURE__ */ import_react18.default.createElement(Button2, {
       kind: "primary",
       loading: adding,
-      accessibilityLabel: `testCartUpdate`,
+      accessibilityLabel: `testApplyLavaDiscount`,
       onPress: () => {
-        testCartUpdate();
+        testApplyLavaDiscount();
       }
-    }, "testCartUpdate"))), showError && /* @__PURE__ */ import_react18.default.createElement(Banner2, {
+    }, "testApplyLavaDiscount"))), showError && /* @__PURE__ */ import_react18.default.createElement(Banner2, {
       status: "critical"
     }, "There was an issue adding this product. Please try again.")));
   }

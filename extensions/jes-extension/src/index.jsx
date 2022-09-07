@@ -32,7 +32,7 @@ const PRODUCT_VARIANTS_DATA = [
 
 // Set the entry points for the extension
 render("Checkout::Dynamic::Render", () => <App />);
-// render("Checkout::DeliveryAddress::RenderBefore", () => <App />);
+render("Checkout::DeliveryAddress::RenderBefore", () => <App />);
 
 function App() {
   const applyAttributeChange = useApplyAttributeChange();
@@ -40,9 +40,7 @@ function App() {
   const { i18n } = useExtensionApi();
   const applyCartLinesChange = useApplyCartLinesChange();
   const getAttributes = useAttributes();
-
-  const myattr = getAttributes;
-  console.log("GET ATTRIBUTES myattr", myattr);
+  const myId = 'gid://shopify/ProductVariant/43575520952562';
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -106,31 +104,58 @@ function App() {
     }
   };
 
-  const testCartUpdate = async () => {
-    console.log('testCartUpdate')
+  const testApplyLavaDiscount = async () => {
+    console.log('testApplyLavaDiscount');
     try {
-      applyAttributeChange({
-        key: "volume_code",
-        type: "updateAttribute",
-        value: "50",
+      // call LAVA API 
+      await fetch("https://httpbin.org/ip", {
+        mode: "cors",
+        credentials: "same-origin",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Bypass-Tunnel-Reminder": "true",
+        },
       })
+        .then((response) => response.json())
         .then((data) => {
-          console.log("ATTRIBUTES", data);
-        })
-        .then( async (attributes) => {
-          const atttt = getAttributes;
-          console.log("GET ATTRIBUTES", atttt);
-          console.log("APPLY PROD TO CARD ", id);
-          await applyCartLinesChange({
-            type: "addCartLine",
-            merchandiseId: id,
-            quantity: 0,
-          }).then((data) => console.log("DATA", data))
-          .catch((error) => console.error("ERROR", error));
+          // insert mocked data here
+          data = data // add your object here
+          console.log(" LAVA RESPONSE IS ", data);
+          try {
+            /* applyAttributeChange sets an arbitrary attribute to the cart
+              insert attribute field in input.graphql and in api.rs as optional
+             */
+            applyAttributeChange({
+              key: "volume_code",
+              type: "updateAttribute",
+              value: "50",
+            })
+              .then( async () => {
+                // check if the new attribute has been applied
+                const newAttribute = getAttributes;
+                console.log("GET NEW ATTRIBUTES", newAttribute);
+                // since the applyAttributeChange does not trigger the discount functions to be re-executed
+                // we need to use applyCartLinesChange to update the cart
+                // since we only have to trigger the discount function without adding any product
+                // we set quantity to 0
+                await applyCartLinesChange({
+                  type: "addCartLine",
+                  merchandiseId: myId,
+                  quantity: 0,
+                }).then((applyCartLinesChangeResponse) => console.log("applyCartLinesChangeResponse", applyCartLinesChangeResponse))
+                .catch((applyCartLinesChangeError) => console.error("applyCartLinesChangeError", applyCartLinesChangeError));
+              });
+          } catch (e) {
+            console.log("ERROR IN applyAttributeChange", e);
+          }
         });
-    } catch (e) {
-      console.log("ERROR IN useApplyAttributeChange", e);
+    } catch (error) {
+      console.log("API CALL ERROR", error);
     }
+
+
+
+    
     
   };
 
@@ -139,6 +164,7 @@ function App() {
     setLoading(true);
     // If you're making a network request, then replace the following code with the HTTP call
     // If you don't need to make a network request, then you can remove this `useEffect`
+    testApplyLavaDiscount()
     new Promise((resolve) => {
       setTimeout(() => {
         resolve(PRODUCT_VARIANTS_DATA);
@@ -255,12 +281,12 @@ function App() {
             <Button
               kind="primary"
               loading={adding}
-              accessibilityLabel={`testCartUpdate`}
+              accessibilityLabel={`testApplyLavaDiscount`}
               onPress={() => {
-                testCartUpdate();
+                testApplyLavaDiscount();
               }}
             >
-              testCartUpdate
+              testApplyLavaDiscount
             </Button>
           </InlineLayout>
         </BlockStack>
